@@ -1,0 +1,126 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const teamMembers = await getCollection('team');
+  
+  // Custom sort order to match design flow: Saleem, Fayaadh, Dinesh, Isa, Imaad
+  const order = ['saleem-jaffer', 'fayaadh-dhansay', 'dinesh-makan', 'isa-tippens', 'imaad-davies'];
+  const sortedMembers = [...teamMembers].sort((a, b) => {
+    return order.indexOf(a.data.slug) - order.indexOf(b.data.slug);
+  });
+
+  return sortedMembers.map((member, index) => {
+    const prevMember = sortedMembers[(index - 1 + sortedMembers.length) % sortedMembers.length];
+    const nextMember = sortedMembers[(index + 1) % sortedMembers.length];
+    
+    return {
+      params: { member: member.data.slug },
+      props: { 
+        member,
+        prevSlug: prevMember.data.slug,
+        prevName: prevMember.data.name,
+        nextSlug: nextMember.data.slug,
+        nextName: nextMember.data.name
+      },
+    };
+  });
+}
+
+const { member, prevSlug, prevName, nextSlug, nextName } = Astro.props;
+const { name, role, image, bio } = member.data;
+---
+
+<Layout title={`${name} - ${role} | Alpha Crest`} description={`Read about ${name}, ${role} at Alpha Crest.`}>
+  <Header />
+  
+  <main class="pt-32 pb-24 min-h-screen flex flex-col justify-between">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <!-- Back button -->
+      <div class="mb-10">
+        <a 
+          href="/#team" 
+          class="inline-flex items-center font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-slate-400 hover:text-accent transition-colors group"
+        >
+          <svg class="h-4 w-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+          </svg>
+          Back to Team
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <!-- Image Card Column -->
+        <div class="md:col-span-4 space-y-6">
+          <div class="relative group">
+            <div class="relative rounded-[2px] bg-ink-900 border border-white/[0.08] overflow-hidden">
+              <img 
+                src={image} 
+                alt={name} 
+                class="w-full aspect-[4/5] object-cover object-top transition duration-500 group-hover:scale-105" 
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/20 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-6 text-center md:hidden">
+                <h1 class="text-3xl font-display font-medium text-white tracking-tight">{name}</h1>
+                <p class="font-mono text-[11px] font-medium tracking-[0.2em] text-accent mt-2 uppercase">{role}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bio Content Column -->
+        <div class="md:col-span-8 space-y-8">
+          <div class="hidden md:block space-y-4">
+            <h1 class="text-4xl lg:text-5xl font-display font-medium text-white tracking-tight">{name}</h1>
+            <div class="inline-block px-3 py-1.5 rounded-[2px] bg-accent/[0.07] border border-accent/20 font-mono text-[10px] font-medium tracking-[0.2em] text-accent uppercase">
+              {role}
+            </div>
+          </div>
+
+          <!-- Divider for mobile layout -->
+          <div class="h-[1px] w-full bg-white/[0.06] md:hidden"></div>
+
+          <div class="space-y-6 text-slate-400 leading-relaxed text-base lg:text-lg">
+            {bio.map((para: string) => (
+              <p>{para}</p>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Footer -->
+      <div class="border-t border-white/[0.06] mt-16 pt-8 flex items-center justify-between">
+        <a 
+          href={`/${prevSlug}/`} 
+          class="flex flex-col items-start space-y-1 text-slate-400 hover:text-accent transition-colors group"
+        >
+          <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 font-medium flex items-center">
+            <svg class="h-3.5 w-3.5 mr-1 transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+            Previous
+          </span>
+          <span class="text-sm font-bold text-slate-300 group-hover:text-white hidden sm:inline">{prevName}</span>
+        </a>
+
+        <a 
+          href={`/${nextSlug}/`} 
+          class="flex flex-col items-end space-y-1 text-slate-400 hover:text-accent transition-colors group"
+        >
+          <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 font-medium flex items-center">
+            Next
+            <svg class="h-3.5 w-3.5 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </span>
+          <span class="text-sm font-bold text-slate-300 group-hover:text-white hidden sm:inline">{nextName}</span>
+        </a>
+      </div>
+    </div>
+  </main>
+  
+  <Footer />
+</Layout>

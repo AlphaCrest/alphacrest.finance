@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+@theme {
+  /* Layered dark surfaces — deep navy, institutional */
+  --color-ink-950: #04070d;
+  --color-ink-900: #070c15;
+  --color-ink-850: #0a111e;
+  --color-ink-800: #101a2d;
+
+  /* Brand accent — used with restraint */
+  --color-accent: #00f2fe;
+  --color-accent-2: #4facfe;
+
+  /* Phthalo green (ambient depth only) */
+  --color-phthalo-950: #0a1f16;
+  --color-phthalo-900: #123524;
+  --color-phthalo-700: #1c4f38;
+  --color-phthalo-500: #2f7d5a;
+  --color-phthalo-400: #3f9d74;
+
+  /* Typography */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-ink-950);
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
+    color: #ffffff;
+  }
+
+  /* Slim dark scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink-950);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-ink-800);
+    border-radius: 8px;
+    border: 2px solid var(--color-ink-950);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #1d2a45;
+  }
+}
+
+@layer components {
+  /* Flat institutional panel — hairline border, no blur, no glow */
+  .glass {
+    background-color: rgb(255 255 255 / 0.02);
+    border: 1px solid rgb(255 255 255 / 0.08);
+    box-shadow: 0 16px 32px -24px rgb(0 0 0 / 0.7);
+  }
+
+  .glass-hover {
+    transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+  }
+  .glass-hover:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+    background-color: rgb(255 255 255 / 0.04);
+  }
+
+  /* Hairline divider */
+  .rule {
+    height: 1px;
+    background-color: rgb(255 255 255 / 0.08);
+    border: 0;
+  }
+
+  /* Mono uppercase eyebrow with dash */
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .kicker::before {
+    content: "";
+    display: inline-block;
+    width: 1.5rem;
+    height: 1px;
+    background: linear-gradient(to right, var(--color-accent), transparent);
+  }
+
+  /* Buttons — square, mono, uppercase: desk-terminal institutional */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 1.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-950);
+    background-color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    border-radius: 2px;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+  .btn-primary:hover {
+    background-color: color-mix(in srgb, var(--color-accent) 85%, #ffffff);
+    border-color: color-mix(in srgb, var(--color-accent) 85%, #ffffff);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-sm {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.6875rem;
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 1.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #cbd5e1;
+    background-color: transparent;
+    border: 1px solid rgb(255 255 255 / 0.14);
+    border-radius: 2px;
+    transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease, transform 0.2s ease;
+  }
+  .btn-ghost:hover {
+    transform: translateY(-1px);
+    border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+    background-color: rgb(255 255 255 / 0.03);
+    color: #ffffff;
+  }
+  .btn-ghost:active {
+    transform: translateY(0);
+  }
+
+  /* Faint blueprint grid overlay (use on an absolutely-positioned inset-0 div) */
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgb(148 163 184 / 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(148 163 184 / 0.035) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 75%);
+  }
+
+  /* Gradient text — reserved for the hero headline accent */
+  .text-gradient {
+    background-image: linear-gradient(to right, var(--color-accent), var(--color-accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}

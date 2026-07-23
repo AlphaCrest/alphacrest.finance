@@ -1,0 +1,130 @@
+---
+---
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent">
+  <!-- Regulatory Banner -->
+  <div class="bg-amber-500/[0.07] border-b border-amber-500/15 py-2 px-4 text-center">
+    <p class="text-[10px] sm:text-[11px] font-mono font-medium text-amber-200/80 leading-normal tracking-wide">
+      Alpha Crest (Pty) Ltd is not an authorized financial services provider (FSP). Our application is pending with the Financial Services Conduct Authority (FSCA). The fund remains closed pending approval.
+    </p>
+  </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a href="/#home" class="flex items-center space-x-2 transition-opacity hover:opacity-90">
+        <img 
+          src="/assets/Alpha-Crest-logo-text-white.webp" 
+          alt="Alpha Crest Logo" 
+          class="h-10 w-auto object-contain" 
+        />
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center space-x-8">
+        <a href="/#home" class="nav-link relative font-mono text-[11px] font-medium tracking-[0.18em] text-slate-400 hover:text-white transition-colors">HOME</a>
+        <a href="/#about" class="nav-link relative font-mono text-[11px] font-medium tracking-[0.18em] text-slate-400 hover:text-white transition-colors">ABOUT</a>
+        <a href="/#whatweoffer" class="nav-link relative font-mono text-[11px] font-medium tracking-[0.18em] text-slate-400 hover:text-white transition-colors">WHAT WE OFFER</a>
+        <a href="/#team" class="nav-link relative font-mono text-[11px] font-medium tracking-[0.18em] text-slate-400 hover:text-white transition-colors">TEAM</a>
+        <a href="/#contact" class="btn-primary btn-sm tracking-wider">
+          GET IN TOUCH
+        </a>
+      </nav>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden">
+        <button 
+          type="button" 
+          id="mobile-menu-btn" 
+          class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-white/5 focus:outline-none"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg class="h-6 w-6 block" id="menu-icon-open" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+          <svg class="h-6 w-6 hidden" id="menu-icon-close" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="md:hidden hidden bg-ink-950/95 backdrop-blur-md border-b border-white/[0.06]" id="mobile-menu">
+    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+      <a href="/#home" class="mobile-nav-link block px-3 py-2 rounded-md font-mono text-xs tracking-[0.18em] text-slate-400 hover:text-white hover:bg-white/5">HOME</a>
+      <a href="/#about" class="mobile-nav-link block px-3 py-2 rounded-md font-mono text-xs tracking-[0.18em] text-slate-400 hover:text-white hover:bg-white/5">ABOUT</a>
+      <a href="/#whatweoffer" class="mobile-nav-link block px-3 py-2 rounded-md font-mono text-xs tracking-[0.18em] text-slate-400 hover:text-white hover:bg-white/5">WHAT WE OFFER</a>
+      <a href="/#team" class="mobile-nav-link block px-3 py-2 rounded-md font-mono text-xs tracking-[0.18em] text-slate-400 hover:text-white hover:bg-white/5">TEAM</a>
+      <a href="/#contact" class="mobile-nav-link btn-primary btn-sm w-full mt-4 tracking-wider">
+        GET IN TOUCH
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  #site-header.scrolled {
+    background-color: rgb(4 7 13 / 0.88);
+    backdrop-filter: blur(12px);
+    border-bottom-color: rgb(255 255 255 / 0.08);
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 1px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+</style>
+
+<script>
+  // Scroll-aware header background
+  const header = document.getElementById('site-header');
+  const onScroll = () => {
+    if (header) header.classList.toggle('scrolled', window.scrollY > 24);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const openIcon = document.getElementById('menu-icon-open');
+  const closeIcon = document.getElementById('menu-icon-close');
+
+  if (menuBtn && mobileMenu && openIcon && closeIcon) {
+    menuBtn.addEventListener('click', () => {
+      const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', String(!isExpanded));
+      
+      mobileMenu.classList.toggle('hidden');
+      openIcon.classList.toggle('hidden');
+      openIcon.classList.toggle('block');
+      closeIcon.classList.toggle('hidden');
+      closeIcon.classList.toggle('block');
+    });
+
+    // Close mobile menu on click of links
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        openIcon.classList.remove('hidden');
+        openIcon.classList.add('block');
+        closeIcon.classList.remove('block');
+        closeIcon.classList.add('hidden');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>

@@ -1,0 +1,80 @@
+---
+const currentYear = new Date().getFullYear();
+---
+<footer class="relative bg-ink-950 pt-16 pb-8 text-slate-400">
+  <!-- Hairline top border -->
+  <div class="absolute top-0 left-0 right-0 h-px bg-white/[0.08]"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+      <!-- Branding & Description -->
+      <div class="md:col-span-2 space-y-6">
+        <a href="/#home" class="inline-block">
+          <img 
+            src="/assets/Alpha-Crest-logo-text-white.webp" 
+            alt="Alpha Crest Logo" 
+            class="h-10 w-auto object-contain" 
+          />
+        </a>
+        <p class="text-sm text-slate-400 max-w-sm leading-relaxed">
+          Alpha Crest is a quantitative investment manager specializing in systematic, algorithmically-driven digital asset strategies.
+        </p>
+        <!-- Social Links -->
+        <div class="flex space-x-4">
+          <a 
+            href="https://www.linkedin.com/company/101651606" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="p-2 glass rounded-[2px] text-slate-400 hover:text-accent hover:border-accent/30 transition-all"
+            aria-label="LinkedIn"
+          >
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="space-y-4">
+        <h3 class="font-mono text-[10px] font-medium text-slate-500 uppercase tracking-[0.25em]">Navigation</h3>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="/#home" class="hover:text-white transition-colors">Home</a></li>
+          <li><a href="/#about" class="hover:text-white transition-colors">About Us</a></li>
+          <li><a href="/#whatweoffer" class="hover:text-white transition-colors">What We Offer</a></li>
+          <li><a href="/#team" class="hover:text-white transition-colors">Our Team</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="space-y-4">
+        <h3 class="font-mono text-[10px] font-medium text-slate-500 uppercase tracking-[0.25em]">Contact</h3>
+        <ul class="space-y-2.5 text-sm">
+          <li>
+            <span class="block text-xs text-slate-500 uppercase">Email</span>
+            <a href="mailto:info@alphacrest.finance" class="hover:text-white transition-colors">info@alphacrest.finance</a>
+          </li>
+          <li>
+            <span class="block text-xs text-slate-500 uppercase">Registered Address</span>
+            <span class="text-slate-400 block leading-relaxed">
+              Cape Town, South Africa
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="border-t border-white/[0.06] pt-8 mt-12 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="text-xs text-slate-500 text-center md:text-left space-y-2">
+        <p>© {currentYear} Alpha Crest (Pty) Ltd. All rights reserved.</p>
+        <p>Alpha Crest (Pty) Ltd is not an authorized financial services provider (FSP). Our application is pending with the Financial Services Conduct Authority (FSCA). The fund remains closed pending approval.</p>
+      </div>
+      <div class="flex space-x-6 text-xs text-slate-500">
+        <a href="/regulatory-disclosures/" class="hover:text-slate-300 transition-colors">Regulatory Disclosures</a>
+        <a href="/privacy-policy/" class="hover:text-slate-300 transition-colors">Privacy Policy</a>
+        <a href="/terms/" class="hover:text-slate-300 transition-colors">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+</footer>
