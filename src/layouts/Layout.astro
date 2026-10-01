@@ -1,71 +1,86 @@
 ---
+import { Font } from 'astro:assets';
 import '../styles/global.css';
 
 interface Props {
   title?: string;
   description?: string;
+  /** Root-relative path of the social preview image (1200×630) */
+  image?: string;
 }
 
-const { 
-  title = "Alpha Crest | Quantitative Cryptocurrency Trading", 
-  description = "Alpha Crest is a quantitative trading firm specializing in systematic cryptocurrency strategies, beating the market algorithmically." 
+const {
+  title = 'Alpha Crest | Quantitative Cryptocurrency Trading',
+  description = 'Alpha Crest is a quantitative trading firm specializing in systematic cryptocurrency strategies, beating the market algorithmically.',
+  image = '/og-image.jpg',
 } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const imageUrl = new URL(image, Astro.site).href;
+
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Alpha Crest',
+  legalName: 'Alpha Crest (Pty) Ltd',
+  url: new URL('/', Astro.site).href,
+  logo: new URL('/apple-touch-icon.png', Astro.site).href,
+  email: 'info@alphacrest.finance',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Cape Town',
+    addressCountry: 'ZA',
+  },
+  sameAs: ['https://www.linkedin.com/company/101651606'],
+};
 ---
 
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<!doctype html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/webp" href="/assets/Alpha-Crest-Favicon.webp" />
-    <meta name="generator" content={Astro.generator} />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#04070d" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Alpha Crest" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Alpha Crest — Beating the Market, Algorithmically" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+
+    <Font cssVariable="--font-jakarta" preload />
+    <Font cssVariable="--font-fraunces" preload />
+    <Font cssVariable="--font-jetbrains" />
+
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(organization)}></script>
   </head>
-  <body class="bg-ink-950 text-slate-300 font-sans antialiased">
+  <body class="bg-ink-950 font-sans text-slate-300 antialiased">
+    <a href="#main" class="skip-link">Skip to content</a>
     <slot />
-
+    <div class="grain" aria-hidden="true"></div>
     <script>
-      // Scroll-reveal animations via IntersectionObserver
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-          }
-        });
-      }, {
-        threshold: 0.05,
-        rootMargin: "0px 0px -40px 0px"
-      });
-
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      import '../scripts/interactions';
     </script>
   </body>
 </html>
-
-<style is:global>
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
-  }
-
-  /* Scroll Reveal CSS */
-  .reveal {
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.7s cubic-bezier(0.215, 0.61, 0.355, 1), transform 0.7s cubic-bezier(0.215, 0.61, 0.355, 1);
-    will-change: opacity, transform;
-  }
-  
-  .reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .reveal-delay-100 { transition-delay: 100ms; }
-  .reveal-delay-200 { transition-delay: 200ms; }
-  .reveal-delay-300 { transition-delay: 300ms; }
-  .reveal-delay-400 { transition-delay: 400ms; }
-</style>

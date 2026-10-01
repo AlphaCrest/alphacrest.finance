@@ -1,130 +1,253 @@
 ---
+import Logo from './Logo.astro';
+
+const links = [
+  { id: 'home', label: 'Home' },
+  { id: 'about', label: 'About' },
+  { id: 'whatweoffer', label: 'What We Offer' },
+  { id: 'team', label: 'Team' },
+];
 ---
-<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent">
+
+<header id="site-header" class="site-header fixed inset-x-0 top-0 z-50">
   <!-- Regulatory Banner -->
-  <div class="bg-amber-500/[0.07] border-b border-amber-500/15 py-2 px-4 text-center">
-    <p class="text-[10px] sm:text-[11px] font-mono font-medium text-amber-200/80 leading-normal tracking-wide">
+  <div class="border-b border-amber-400/15 bg-amber-500/[0.07] px-4 py-2 text-center">
+    <p class="font-mono text-[10px] leading-normal font-medium tracking-wide text-amber-200/85 sm:text-[11px]">
       Alpha Crest (Pty) Ltd is not an authorized financial services provider (FSP). Our application is pending with the Financial Services Conduct Authority (FSCA). The fund remains closed pending approval.
     </p>
   </div>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-20">
-      <!-- Logo -->
-      <a href="/#home" class="flex items-center space-x-2 transition-opacity hover:opacity-90">
-        <img 
-          src="/assets/Alpha-Crest-logo-text-white.webp" 
-          alt="Alpha Crest Logo" 
-          class="h-10 w-auto object-contain" 
-        />
+
+  <div class="relative">
+    <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 md:h-20 lg:px-8">
+      <a href="/#home" class="logo-link -m-2 p-2" aria-label="Alpha Crest — home">
+        <Logo class="h-8 w-auto md:h-9" title="" />
       </a>
 
       <!-- Desktop Navigation -->
-      <nav class="hidden md:flex items-center space-x-8">
-        <a href="/#home" class="nav-link relative font-mono text-[11px] font-medium tracking-[0.18em] text-slate-400 hover:text-white transition-colors">HOME</a>
-        <a href="/#about" class="nav-link relative font-mono text-[11px] font-medium tracking-[0.18em] text-slate-400 hover:text-white transition-colors">ABOUT</a>
-        <a href="/#whatweoffer" class="nav-link relative font-mono text-[11px] font-medium tracking-[0.18em] text-slate-400 hover:text-white transition-colors">WHAT WE OFFER</a>
-        <a href="/#team" class="nav-link relative font-mono text-[11px] font-medium tracking-[0.18em] text-slate-400 hover:text-white transition-colors">TEAM</a>
-        <a href="/#contact" class="btn-primary btn-sm tracking-wider">
-          GET IN TOUCH
-        </a>
+      <nav aria-label="Primary" class="hidden items-center gap-10 md:flex">
+        <div class="relative" data-nav>
+          <ul class="flex items-center gap-8" role="list">
+            {
+              links.map((link) => (
+                <li>
+                  <a href={`/#${link.id}`} data-spy={link.id} class="nav-link font-mono text-[11px] font-medium tracking-[0.18em] uppercase">
+                    {link.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+          <span class="nav-indicator" aria-hidden="true"></span>
+        </div>
+        <a href="/#contact" class="btn-primary btn-sm" data-magnetic>Get in Touch</a>
       </nav>
 
-      <!-- Mobile menu button -->
-      <div class="md:hidden">
-        <button 
-          type="button" 
-          id="mobile-menu-btn" 
-          class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-white/5 focus:outline-none"
-          aria-controls="mobile-menu"
-          aria-expanded="false"
-        >
-          <span class="sr-only">Open main menu</span>
-          <svg class="h-6 w-6 block" id="menu-icon-open" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-          </svg>
-          <svg class="h-6 w-6 hidden" id="menu-icon-close" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
+      <!-- Mobile menu toggle -->
+      <button
+        type="button"
+        class="menu-toggle -mr-2 inline-flex size-11 items-center justify-center rounded-[2px] text-slate-300 transition-colors hover:bg-white/5 hover:text-white md:hidden"
+        popovertarget="mobile-menu"
+        aria-controls="mobile-menu"
+        aria-label="Menu"
+      >
+        <svg class="icon-open size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+        </svg>
+        <svg class="icon-close size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path>
+        </svg>
+      </button>
     </div>
+
+    <div class="scroll-progress absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-accent to-accent-2" aria-hidden="true"></div>
   </div>
 
-  <!-- Mobile menu -->
-  <div class="md:hidden hidden bg-ink-950/95 backdrop-blur-md border-b border-white/[0.06]" id="mobile-menu">
-    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-      <a href="/#home" class="mobile-nav-link block px-3 py-2 rounded-md font-mono text-xs tracking-[0.18em] text-slate-400 hover:text-white hover:bg-white/5">HOME</a>
-      <a href="/#about" class="mobile-nav-link block px-3 py-2 rounded-md font-mono text-xs tracking-[0.18em] text-slate-400 hover:text-white hover:bg-white/5">ABOUT</a>
-      <a href="/#whatweoffer" class="mobile-nav-link block px-3 py-2 rounded-md font-mono text-xs tracking-[0.18em] text-slate-400 hover:text-white hover:bg-white/5">WHAT WE OFFER</a>
-      <a href="/#team" class="mobile-nav-link block px-3 py-2 rounded-md font-mono text-xs tracking-[0.18em] text-slate-400 hover:text-white hover:bg-white/5">TEAM</a>
-      <a href="/#contact" class="mobile-nav-link btn-primary btn-sm w-full mt-4 tracking-wider">
-        GET IN TOUCH
-      </a>
-    </div>
-  </div>
+  <!-- Mobile menu (native popover: light-dismiss, Esc, top layer) -->
+  <nav id="mobile-menu" popover aria-label="Mobile" class="mobile-menu md:hidden">
+    <ul class="space-y-1" role="list">
+      {
+        links.map((link, index) => (
+          <li style={`--i:${index}`}>
+            <a href={`/#${link.id}`} data-spy={link.id} class="mobile-link flex items-baseline gap-4 rounded-[2px] px-3 py-3 text-slate-300 transition-colors hover:bg-white/[0.04] hover:text-white">
+              <span class="font-mono text-[10px] tracking-[0.2em] text-slate-500">{String(index + 1).padStart(2, '0')}</span>
+              <span class="font-display text-2xl font-medium tracking-tight">{link.label}</span>
+            </a>
+          </li>
+        ))
+      }
+      <li class="pt-5" style={`--i:${links.length}`}>
+        <a href="/#contact" class="mobile-link btn-primary w-full">Get in Touch</a>
+      </li>
+    </ul>
+  </nav>
 </header>
 
 <style>
-  #site-header.scrolled {
-    background-color: rgb(4 7 13 / 0.88);
-    backdrop-filter: blur(12px);
-    border-bottom-color: rgb(255 255 255 / 0.08);
+  .site-header {
+    view-transition-name: site-header;
+    border-bottom: 1px solid transparent;
+    transition:
+      background-color 0.4s ease,
+      border-color 0.4s ease,
+      backdrop-filter 0.4s ease;
+  }
+  .site-header.is-scrolled,
+  .site-header:has(.mobile-menu:popover-open) {
+    background-color: rgb(4 7 13 / 0.82);
+    border-bottom-color: rgb(255 255 255 / 0.07);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
   }
 
-  .nav-link::after {
-    content: "";
+  .nav-link {
+    color: #94a3b8;
+    transition: color 0.25s ease;
+  }
+  .nav-link:hover,
+  .nav-link[aria-current='true'] {
+    color: #ffffff;
+  }
+
+  /* Sliding indicator: follows hover, rests on the section in view (positioned by the script below) */
+  .nav-indicator {
     position: absolute;
     left: 0;
-    bottom: -6px;
-    width: 100%;
+    bottom: -0.625rem;
+    width: var(--w, 0px);
     height: 1px;
     background: var(--color-accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
+    box-shadow: 0 0 10px 1px rgb(0 242 254 / 0.55);
+    opacity: 0;
+    transform: translateX(var(--x, 0px));
+    transition:
+      transform 0.55s var(--ease-out-expo),
+      width 0.55s var(--ease-out-expo),
+      opacity 0.3s ease;
   }
-  .nav-link:hover::after {
-    transform: scaleX(1);
+  .nav-indicator.is-active {
+    opacity: 1;
+  }
+
+  .menu-toggle .icon-close,
+  .site-header:has(.mobile-menu:popover-open) .icon-open {
+    display: none;
+  }
+  .site-header:has(.mobile-menu:popover-open) .icon-close {
+    display: block;
+  }
+
+  .mobile-menu {
+    position: fixed;
+    inset: var(--header-h) 0 auto 0;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    margin: 0;
+    padding: 1rem 1rem 1.75rem;
+    border: 0;
+    border-bottom: 1px solid rgb(255 255 255 / 0.08);
+    background-color: rgb(4 7 13 / 0.94);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    color: inherit;
+    box-shadow: 0 40px 60px -30px rgb(0 0 0 / 0.9);
+    opacity: 0;
+    transform: translateY(-0.5rem);
+    transition:
+      opacity 0.3s var(--ease-out-quint),
+      transform 0.45s var(--ease-out-expo),
+      overlay 0.45s allow-discrete,
+      display 0.45s allow-discrete;
+  }
+  .mobile-menu:popover-open {
+    opacity: 1;
+    transform: none;
+  }
+  @starting-style {
+    .mobile-menu:popover-open {
+      opacity: 0;
+      transform: translateY(-0.5rem);
+    }
+  }
+  .mobile-menu::backdrop {
+    background: transparent;
+  }
+  .mobile-menu:popover-open li {
+    animation: rise-in 0.6s var(--ease-out-expo) both;
+    animation-delay: calc(var(--i) * 45ms + 60ms);
+  }
+  .mobile-link[aria-current='true'] {
+    color: #ffffff;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-menu,
+    .nav-indicator {
+      transition: none;
+    }
+    .mobile-menu:popover-open li {
+      animation: none;
+    }
   }
 </style>
 
 <script>
-  // Scroll-aware header background
   const header = document.getElementById('site-header');
-  const onScroll = () => {
-    if (header) header.classList.toggle('scrolled', window.scrollY > 24);
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  const menu = document.getElementById('mobile-menu');
 
-  const menuBtn = document.getElementById('mobile-menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const openIcon = document.getElementById('menu-icon-open');
-  const closeIcon = document.getElementById('menu-icon-close');
-
-  if (menuBtn && mobileMenu && openIcon && closeIcon) {
-    menuBtn.addEventListener('click', () => {
-      const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
-      menuBtn.setAttribute('aria-expanded', String(!isExpanded));
-      
-      mobileMenu.classList.toggle('hidden');
-      openIcon.classList.toggle('hidden');
-      openIcon.classList.toggle('block');
-      closeIcon.classList.toggle('hidden');
-      closeIcon.classList.toggle('block');
-    });
-
-    // Close mobile menu on click of links
-    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-        openIcon.classList.remove('hidden');
-        openIcon.classList.add('block');
-        closeIcon.classList.remove('block');
-        closeIcon.classList.add('hidden');
-        menuBtn.setAttribute('aria-expanded', 'false');
-      });
-    });
+  // Glass background once the page has scrolled
+  if (header) {
+    const update = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
   }
+
+  // Close the mobile popover after choosing a destination
+  if (menu) {
+    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => menu.hidePopover()));
+  }
+
+  // Scrollspy + sliding indicator (homepage only: other pages have no matching sections)
+  const navGroup = document.querySelector<HTMLElement>('[data-nav]');
+  const indicator = navGroup?.querySelector<HTMLElement>('.nav-indicator');
+  const spyLinks = [...document.querySelectorAll<HTMLAnchorElement>('[data-spy]')];
+  const sectionIds = ['home', 'about', 'whatweoffer', 'team', 'contact'];
+  const sections = sectionIds
+    .map((id) => document.getElementById(id))
+    .filter((section): section is HTMLElement => section !== null);
+
+  let activeId: string | null = null;
+
+  // Moves the indicator under the desktop link for `id`; hides it when that section has no link (e.g. contact)
+  const placeIndicator = (id: string | null | undefined) => {
+    if (!indicator || !navGroup) return;
+    const link = id ? navGroup.querySelector<HTMLElement>(`[data-spy="${id}"]`) : null;
+    indicator.classList.toggle('is-active', link !== null);
+    if (!link) return;
+    indicator.style.setProperty('--x', `${link.offsetLeft}px`);
+    indicator.style.setProperty('--w', `${link.offsetWidth}px`);
+  };
+
+  if (sections.length) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const current = entries.find((entry) => entry.isIntersecting);
+        if (!current) return;
+        activeId = current.target.id;
+        for (const link of spyLinks) {
+          if (link.dataset.spy === activeId) link.setAttribute('aria-current', 'true');
+          else link.removeAttribute('aria-current');
+        }
+        placeIndicator(activeId);
+      },
+      // A thin band across the upper-middle of the viewport decides the active section
+      { rootMargin: '-40% 0px -58% 0px' },
+    );
+    sections.forEach((section) => observer.observe(section));
+  }
+
+  navGroup?.querySelectorAll<HTMLElement>('[data-spy]').forEach((link) => {
+    link.addEventListener('pointerenter', () => placeIndicator(link.dataset.spy));
+  });
+  navGroup?.addEventListener('pointerleave', () => placeIndicator(activeId));
 </script>

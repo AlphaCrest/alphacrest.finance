@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Page Not Found | Alpha Crest" description="The page you were looking for could not be found.">
+  <Header />
+  <main id="main" class="not-found relative isolate flex min-h-svh items-center justify-center overflow-clip pb-24">
+    <div class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_50%_45%_at_50%_45%,_rgba(28,79,56,0.28),_transparent_70%)]" aria-hidden="true"></div>
+    <div class="grid-bg pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
+
+    <div class="mx-auto max-w-2xl px-4 text-center">
+      <p class="kicker enter">Error 404</p>
+      <h1 class="enter mt-6 text-5xl font-medium tracking-tight text-white sm:text-7xl" style="--delay:80ms">
+        Page not <span class="text-gradient">found</span>
+      </h1>
+      <p class="enter mx-auto mt-6 max-w-md text-lg leading-relaxed text-slate-400" style="--delay:160ms">
+        The page you are looking for does not exist or has moved.
+      </p>
+      <div class="enter mt-10" style="--delay:240ms">
+        <a href="/" class="btn-primary" data-magnetic>
+          Back to Home
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .not-found {
+    padding-top: var(--header-h);
+  }
+</style>
